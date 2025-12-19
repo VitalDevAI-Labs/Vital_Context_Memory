@@ -1,125 +1,94 @@
-# Active Tasks Reference
+# Active Tasks (Developer-Friendly)
 
-This document is a reusable template for the **Active Tasks** layer inside any BMAD + AContext repository. It acts as the groomed sprint backlog for the **current implementation stage** and sits between the strategic backlog (`Product_Backlog.md`) and the execution trails (`Implementation.md` + `.acontext/tasks`). Copy it into each project repo, then customize the live data while keeping the explanation comments for future teams.
-
----
-
-## 1. Purpose
-- Create a **single queue of ready-to-build tasks** that already passed through discovery and backlog vetting.
-- Mark the **exact point where Product strategy hands work to Engineering**.
-- Maintain real-time visibility into **status, ownership, dependencies, estimates, and acceptance criteria**.
-- Act as the canonical reference for what developers/agents should be working on today.
-
-**Task journey**
-```
-PRD → Product_Backlog → Active_Tasks → Implementation → .acontext/tasks → Code
-```
+> Groomed queue for the current implementation stage. IDs and links must match Product_Backlog and Notion.
 
 ---
 
-## 2. How To Use This File
-1. **At Stage Kickoff**  
-   - Review PRD + Product_Backlog.  
-   - Break the current Implementation stage into 4–10 atomic tasks.  
-   - Paste each task into the table + YAML entry below.
-2. **During Execution**  
-   - Update `status`, `actual_hours`, and `notes` daily.  
-   - Link each task to its `.acontext/tasks/...` log once started.  
-   - Move completed tasks into `Implementation.md`’s “Completed This Stage” list.
-3. **After Stage Completion**  
-   - Archive the task list (keep for reference).  
-   - Reset the table with the next stage’s groomed tasks.
+## 1) How This File Fits
+- Handoff from `Product_Backlog` to execution.
+- Flow: `PRD` -> `Product_Backlog` -> `Active_Task` (this file) -> `.acontext/tasks` -> Code.
+- Items here are manually synced with Notion; no auto-sync expected.
 
 ---
 
-## 3. Dashboard Snapshot
+## 2) Stage Snapshot (roll-up)
 
-| Stage | Owner | Tasks Ready | In Progress | Blocked | Done | % Complete | Notes |
-|-------|-------|-------------|-------------|---------|------|------------|-------|
-| `<Stage Name>` | `<Product/Tech Lead>` | `<#>` | `<#>` | `<#>` | `<#>` | `<auto or manual>` | `<call out risks or scope changes>` |
+| Stage | Owner | Ready | In Progress | Blocked | Review | Done | Notes |
+|-------|-------|-------|-------------|---------|--------|------|-------|
+| `<Stage name>` | `<Lead>` | 0 | 0 | 0 | 0 | 0 | `<risks or scope callouts>` |
 
-> Update the snapshot whenever task counts change. This gives a one-glance summary for leads without opening every task entry.
+Update counts when tasks move.
 
 ---
 
-## 4. Task Entry Template
+## 3) Task Board (one-liners)
 
-Use the YAML block below for each task. Keep the comments—they explain why each field matters. When a task starts, copy the `task_log_path` into the `.acontext/tasks` index so execution history is linked.
+| ID | Title | Stage/Epic | Status | Priority | Owner | Due | Log | Notion |
+|----|-------|------------|--------|----------|-------|-----|-----|--------|
+| `TASK-001` | `<Outcome>` | `<Stage/Epic>` | not-started/in-progress/blocked/review/completed | H/M/L | `<name>` | `YYYY-MM-DD` | `.acontext/tasks/task-YYYYMMDD-XXX.md` | `<Notion link/ID>` |
+
+Keep this table in sync with the YAML entries below.
+
+---
+
+## 4) Lean Task Entry Template (YAML)
 
 ```yaml
-- id: TASK-000
-  title: "Concise action statement"
+- id: TASK-001
+  title: "Outcome-based title"
+  stage: "Implementation stage or epic"
+  status: not-started | in-progress | blocked | review | completed
+  priority: high | med | low
+  owner: "Name or agent"
+  start_date: null     # fill when work starts
+  due_date: null       # optional
+  backlog_id: PB-001   # link to Product_Backlog
+  notion: "Notion task URL or ID"
+  task_log: ".acontext/tasks/task-YYYYMMDD-XXX.md"
   summary: >
-    One-paragraph description focusing on the outcome, not implementation.
-  status: not-started | in-progress | blocked | ready-for-review | completed
-  priority: high | medium | low
-  related_epic: "PRD Epic reference"
-  stage: "Implementation stage label (e.g., Stage 2 – Alarm System)"
-  type: feature | research | bugfix | enablement
-  estimated_hours: 4
-  actual_hours: null # fill when done
-  owner: "Person or agent currently responsible"
-  start_date: null   # ISO date when actual work begins
-  due_date: null     # Optional, only if sprint has deadlines
-  dependencies:
-    - TASK-000 # keep empty array if none
-  blockers: []        # describe what's blocking + owner
-  context_links:
-    prd: "PRD.md#L123"        # direct anchor/line references help future readers
-    backlog: "Product_Backlog.md#L75"
-    implementation: "Implementation.md#L210"
-    research: null
+    1-2 sentences on scope and outcome.
   acceptance_criteria:
-    - "Specific, testable condition #1"
-    - "Specific, testable condition #2"
-  deliverables:
-    - path: "src/services/example.ts"
-      note: "New file"
-    - path: "docs/sequence-diagram.png"
-      note: "Updated artifact"
+    - "Testable condition #1"
+  dependencies:
+    tech: []
+    design: []
+  blockers: []          # describe if status=blocked
   validation:
-    manual: "Describe manual QA steps"
-    automated: "Tests to run (unit/e2e)"
-  communication_plan:
-    cadence: "Daily async update in channel"
-    stakeholders: ["Designer", "QA"]
-  task_log_path: ".acontext/tasks/task-YYYYMMDD-XXX-descriptor.md"
+    manual: "Steps or scenarios"
+    automated: "Tests to run"
   notes: >
-    Free-form observations, reminders, or rationale decisions. Keep short and link
-    longer write-ups to task logs.
+    Brief context, links to decisions if any.
 ```
 
-Add each task entry under a `tasks:` list to keep valid YAML if you want automation support. Otherwise, treat each entry as a stand-alone block.
+---
+
+## 5) Status Model
+- `not-started`: Ready to pick up; DoR met.
+- `in-progress`: Work + log active.
+- `blocked`: Waiting on dependency/decision; note owner in `blockers`.
+- `review`: Code ready; validation captured in log.
+- `completed`: Acceptance criteria met; docs/log updated.
 
 ---
 
-## 5. Grooming Checklist
+## 6) Definition of Ready (developer-focused)
+- Acceptance criteria are testable.
+- Blocking dependencies known/owned.
+- Design/spec link exists if UI involved.
+- Owner and log path planned.
 
-- [ ] Confirm every task traces to a PRD epic + Implementation stage.
-- [ ] Break down work so each task fits in **2–8 hours** of flow time.
-- [ ] Define **acceptance criteria** that are binary (pass/fail).
-- [ ] Identify dependencies early so blocking tasks stay ahead in the queue.
-- [ ] Set owners only when work actually begins to avoid stale assignments.
-- [ ] Keep **estimates + actuals** close—if they diverge, capture the reason in notes.
-- [ ] Link every running task to an `.acontext/tasks` log and update daily.
+If any box is unchecked, keep status below `not-started` and leave it in Product_Backlog.
 
 ---
 
-## 6. Status Definitions
-
-- `not-started`: Groomed and ready; no work yet.
-- `in-progress`: Task log opened, code or research happening.
-- `blocked`: Waiting on dependency/decision. Include owner + ETA in notes.
-- `ready-for-review`: Work complete, awaiting validation or approval.
-- `completed`: Acceptance criteria met, code merged, documentation updated.
+## 7) Rituals
+- When you pick a task: create/update `.acontext/tasks/...` from `TASK_TEMPLATE`, set status `in-progress`.
+- Update status daily; reflect blockers in `blockers` field and table.
+- When complete: mark `completed`, update `.acontext` log outcome, and mirror in Implementation stage checklist.
 
 ---
 
-## 7. Daily Update Ritual
-
-1. Spend 2 minutes updating this file before or after stand-up.  
-2. Ensure `Implementation.md` mirrors the same task statuses for the current stage.  
-3. Call out blockers in the dashboard table and tag the responsible owner.  
-4. When a task finishes, copy the highlights into `.acontext/tasks/<log>.md` and mark the history location here.
-
-Keeping Active_Tasks precise ensures every future contributor can see **what is ready, what is running, and where to look for context** without digging through chat logs or code diffs. Maintain it rigorously, and Implementation stays clean, Product_Backlog stays strategic, and .acontext stays actionable. 
+## 8) Promotion Rule
+- Only add tasks here when the linked `Product_Backlog` item is `ready`.
+- Once added: set `status` to `not-started` and ensure Notion ID + log path are filled.
+- Move off this file (archive/remove) after the stage ships to keep it lean.

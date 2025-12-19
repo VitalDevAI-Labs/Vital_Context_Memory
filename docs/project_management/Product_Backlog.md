@@ -1,134 +1,86 @@
-# Product Backlog (Template)
+# Product Backlog (Developer-Friendly)
 
-> **Use this document to park every feature or enhancement that is approved conceptually but not yet scheduled.** It keeps `Implementation.md` focused on the current release and gives `Active_Task.md` a clean input queue when a new stage begins.
-
----
-
-## 1. Document Purpose
-- Centralize future-ready work streams across all PRD epics.
-- Preserve prioritization rationale, dependencies, and acceptance hints.
-- Serve as the handoff artifact when a feature graduates into `Active_Task.md`.
-
-**Flow Reminder**
-```
-PRD ideas ➜ Groomed & approved ➜ Product_Backlog (this file)
-      ⤷ Selected for next stage ➜ Active_Task.md ➜ Implementation.md
-```
+> Single place to park approved-but-not-scheduled work. Keep it short, keep IDs first, and make promotion to `Active_Task.md` obvious.
 
 ---
 
-## 2. How to Maintain This File
-1. **Intake:** After PRD changes or stakeholder input, capture the candidate feature under the correct epic.
-2. **Qualify:** Document user value, effort estimate, dependencies, and definition of ready.
-3. **Prioritize:** Rank items within each epic using a shared scoring model (e.g., RICE, MoSCoW).
-4. **Promote:** When leadership green-lights a feature for the upcoming stage, move the entry to `Active_Task.md` and note the promotion here.
-5. **Archive:** Once a feature ships, archive or remove it from this backlog to avoid double work.
-
-Update cadence: **weekly or per sprint planning**, whichever happens first.
+## 1) How This Folder Fits
+- `project_management/` is the source of truth. `.acontext` and agents mirror it.
+- Flow: `PRD` -> `Product_Backlog` (this file) -> `Active_Task` -> `.acontext/tasks` -> Code.
+- Items here are manually synced with Notion; no auto-sync expected.
 
 ---
 
-## 3. Backlog Snapshot
+## 2) Backlog Snapshot (one-liners)
 
-| Epic | Feature | Stage | Priority | Status | Notes |
-|------|---------|-------|----------|--------|-------|
-| `<Epic identifier>` | `<Feature name>` | Discovery / Ready / Blocked | High/Med/Low | Idea / Groomed / Approved | `<Key callouts>` |
+| ID | Title | Epic | Status | Priority | Ready? | Notion |
+|----|-------|------|--------|----------|--------|--------|
+| `PB-001` | `<Short outcome>` | `<Epic/Stage>` | idea/groomed/ready | H/M/L | Yes/No | `<Notion link or ID>` |
 
-> This table mirrors the high-level kanban state for stakeholders. Keep it short; details live in the sections below.
+Use the table for quick scanning; details live in the entries below.
 
 ---
 
-## 4. Feature Entry Template
-
-Duplicate the block below for each backlog item. Keep the inline comments—they explain what each field is for and help automation later.
+## 3) Lean Entry Template (YAML)
 
 ```yaml
-- id: PB-000
-  epic: "<PRD epic name>"
-  title: "Outcome-oriented feature name"
-  problem: >
-    Summarize the user pain or business opportunity this feature addresses.
-  audience: ["Primary persona", "Secondary persona"]
-  hypothesis: >
-    What we believe will improve if we ship this feature.
-  user_value:
-    - "Value statement #1"
-    - "Value statement #2"
+- id: PB-001              # Required, keep stable for Git + Notion mapping
+  title: "Outcome-based title"
+  epic: "PRD epic or stage"
+  status: idea | groomed | ready
+  priority: high | med | low
+  notion: "Notion task URL or ID"
+  summary: >
+    1-2 sentences on user value; what success looks like.
   acceptance_hints:
-    - "Condition that must be true to call the feature complete."
+    - "Testable condition #1"
   dependencies:
-    technical: ["API redesign", "Vendor approval"]
-    design: ["New component spec"]
-    compliance: []
-  effort_estimate: "S / M / L"   # optional story points or T-shirt sizing
-  priority_score:
-    method: "RICE"
-    score: 0
-  stage_readiness:
-    definition_of_ready:
-      - "Persona, problem, and metric validated"
-      - "Design spike complete"
-    blockers: []
-  promotion_history: [] # Log when the feature moves to Active_Task or Implementation
+    tech: []    # Keep short; list only blocking deps
+    design: []  # Link to spec if needed
   notes: >
-    Link to research, stakeholder approvals, or Slack threads for extra context.
+    Links to research/decisions. Keep brief.
 ```
 
-Group features under headings like `## Epic 1 – Contextual Notifications` to keep the document scannable.
+Remove unused fields (`compliance`, RICE scores, t-shirt sizing). Keep this as the only schema.
 
 ---
 
-## 5. Prioritization Guidance
-
-- **RICE:** Reach × Impact × Confidence ÷ Effort. Document each component explicitly when possible.
-- **MoSCoW:** Must / Should / Could / Won’t for the current planning horizon.
-- **Cost of Delay:** Highlight regulatory deadlines, contractual obligations, or user churn risks.
-
-Whichever model you use, apply it consistently and store the calculation in the `priority_score` field above so future reviewers can re-run the math.
+## 4) Status Model (keep it simple)
+- `idea`: captured but not vetted.
+- `groomed`: scoped and understood; acceptance hints drafted.
+- `ready`: meets Definition of Ready and can move to `Active_Task.md`.
 
 ---
 
-## 6. Definition of Ready (DoR)
-Before promoting a backlog item into `Active_Task.md`, confirm:
-- [ ] Persona, problem, and success metric traced back to PRD.
-- [ ] UX exploration complete or scheduled with capacity.
-- [ ] Technical spike or architecture notes exist in `.acontext/decisions` if needed.
-- [ ] Dependencies acknowledged with owners and tentative dates.
-- [ ] Acceptance criteria clear enough for automation + manual validation.
+## 5) Definition of Ready (developer-focused)
+- Acceptance hints are testable.
+- Blocking dependencies are known/owned.
+- Design link present if UI work is involved.
 
-If any item fails the DoR checklist, keep it here and document missing pieces in `blockers`.
+If any box is unchecked, keep status below `ready`.
 
 ---
 
-## 7. Ideas Under Consideration
-Reserve this section for unvetted concepts so they don’t clutter the main backlog.
+## 6) Promotion Rule
+- When `status = ready`: move the item into `Active_Task.md`, open a `.acontext/tasks` log when work starts, and mark it as promoted here (optional note in `notes`).
+
+---
+
+## 7) Parking Lot (unvetted ideas)
 
 ```
-- idea: "What if..."
-  source: "Customer interview / Internal brainstorm"
-  next_step: "Run discovery interview", "Prototype"
-  owner: "Name"
-  due: YYYY-MM-DD
+- id: IDEA-001
+  title: "What if..."
+  notion: "<link or ID>"
+  next_step: "Discovery interview / Prototype"
 ```
 
-Once an idea is validated, convert it into the Feature Entry Template and place it under the correct epic.
+Move items into the main backlog template once they are real candidates.
 
 ---
 
-## 8. Audit Trail
-Maintain a mini changelog to capture major prioritization decisions.
-
-| Date | Change | Reason | Author |
-|------|--------|--------|--------|
-| `2025-12-10` | Example: Moved PB-014 to Active_Task Stage 3 | `Stakeholder sign-off` | `Product Lead` |
-
----
-
-### Usage Checklist
-- [ ] Every backlog entry references a PRD epic and persona.
-- [ ] Implementation.md does **not** mention features that remain here.
-- [ ] Active_Task.md only contains items promoted from this backlog (with recorded reason).
-- [ ] Blocked items name an owner responsible for clearing the path.
-- [ ] The backlog table never exceeds a manageable size (archive old entries).
-
-Keep this document lightweight but consistently structured so agents can immediately tell what’s planned, what’s blocked, and what’s ready to promote when the next BMAD cycle begins.
+## Usage Checklist
+- [ ] Every entry has `id` + `notion` for traceability.
+- [ ] Status sticks to `idea/groomed/ready` only.
+- [ ] Table mirrors the entries below.
+- [ ] Move `ready` items to `Active_Task.md` before coding starts.

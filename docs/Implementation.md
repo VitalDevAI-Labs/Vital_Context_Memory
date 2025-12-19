@@ -1,6 +1,6 @@
-# Implementation Plan (Template)
+# Implementation Plan (Developer + Agent Friendly)
 
-> **This document explains _how_ we are executing the subset of the PRD that is officially in scope.** It acts as the bridge between strategy (PRD + Product_Backlog) and execution memory (`Active_Task.md` + `.acontext`). Replace placeholders with project-specific details but keep the structure and inline tips.
+> Bridge from PRD/Product_Backlog to execution. Shows what is in-scope this cycle, which stage we are in, and how to finish it. Keep IDs aligned with `Product_Backlog` and `Active_Task`.
 
 ---
 
@@ -9,7 +9,7 @@
 | Field | Value |
 |-------|-------|
 | **Product / Initiative** | `<Name>` |
-| **Current BMAD Cycle** | `<Cycle identifier or date range>` |
+| **Current Cycle** | `<Cycle identifier or date range>` |
 | **Version** | `<SemVer or incremental number>` |
 | **Owner** | `<Tech/Product lead>` |
 | **Status** | Draft / In Progress / Signed Off |
@@ -18,145 +18,124 @@
 
 ---
 
-## 1. Scope Alignment
-Summarize the specific PRD epics / features that this implementation cycle covers.
+## 1) Scope Alignment (this cycle)
+- List the PRD epics/features included now, plus what is explicitly out.
 
 | PRD Epic | Included Features | Deferred To | Notes |
 |----------|------------------|-------------|-------|
-| `<Epic>` | `<Bulleted list>` | `Product_Backlog` / `Future cycle` | `<Reason / success metric>` |
+| `<Epic>` | `<Bulleted list>` | `Product_Backlog` / `Future cycle` | `<Reason / metric>` |
 
-Call out anything explicitly **not** included even if it belongs to the same epic. This prevents scope creep.
-
----
-
-## 2. Technology & Tooling Stack
-Document the approved stack for this cycle (keep high-level; detailed file conventions live in `project_structure.md`).
-
-| Layer         | Technology                      | Version | Notes / Rationale |
-| ------------- | ------------------------------- | ------- | ----------------- |
-| Mobile        | `<React Native, Flutter, etc.>` | `X.Y.Z` | `<Why chosen>`    |
-| Backend       | `<Node, Rails, etc.>`           |         |                   |
-| Data          | `<SQLite, Postgres>`            |         |                   |
-| Notifications | `<Firebase, Notifee>`           |         |                   |
-| Monitoring    | `<Axiom, Sentry>`               |         |                   |
-
-Add any research spikes or proof-of-concepts required before committing to the stack.
+Call out exclusions to prevent scope creep.
 
 ---
 
-## 3. BMAD Stage Blueprint
+## 2) Stack (only what matters this cycle)
 
-Use standardized stage names to keep teams aligned. You can rename the objective column but keep the general flow from discovery → delivery → stabilization.
+| Layer | Tech | Version | Notes |
+|-------|------|---------|-------|
+| Mobile | `<RN/Flutter/etc>` | | |
+| Backend | `<Node/Rails/etc>` | | |
+| Data | `<SQLite/Postgres>` | | |
+| Notifications | `<Service/Adapter>` | | |
+| Monitoring | `<Axiom/Sentry/etc>` | | |
+
+Add research spikes before locking choices.
+
+---
+
+## 3) Stage Blueprint
 
 | Stage | Objective | Key Deliverables | Exit Criteria |
 |-------|-----------|------------------|---------------|
-| Stage 0 – Foundations | Environments, CI/CD, base architecture | Repo setup, lint/test harness, base theme | All developers can build & test locally. |
-| Stage 1 – Core Experience | Ship the smallest slice that proves value | Core user journeys, baseline data layer | Acceptance criteria validated end-to-end. |
-| Stage 2 – Expansion | Add depth (notifications, automation, etc.) | Secondary flows, integrations | Feature completeness for MVP. |
-| Stage 3 – Polish & Hardening | Fix gaps, add telemetry, UX refinements | Bug backlog, performance tuning | Release candidate approved. |
-| Stage 4 – Launch & Feedback | Final QA, rollout, instrumentation | Release notes, KPIs dashboard | MVP live + monitoring active. |
+| Stage 0 � Foundations | Environments, CI/CD, base arch | Repo setup, lint/test harness, base theme | All devs can build & test locally. |
+| Stage 1 � Core Experience | Ship smallest value slice | Core user journeys, baseline data layer | Acceptance criteria validated end-to-end. |
+| Stage 2 � Expansion | Add depth (notifications, automation) | Secondary flows, integrations | MVP feature completeness. |
+| Stage 3 � Polish & Hardening | Close gaps, add telemetry | Bug backlog, perf tuning | Release candidate approved. |
+| Stage 4 � Launch & Feedback | Final QA, rollout | Release notes, KPIs dashboard | MVP live + monitoring active. |
 
-> Adjust or extend stages as needed, but keep an explicit exit criteria column so teams know when to move on.
+Adjust stages as needed; keep exit criteria explicit.
 
 ---
 
-## 4. Stage Playbooks
-
-For each active stage, describe the plan using the template below. Duplicate the section and keep completed stages at the bottom as history.
+## 4) Stage Playbook (duplicate per active stage)
 
 ```
 ### Stage <Number>: <Name>
-- **Window:** `<Dates or sprint count>`
-- **Goals:** `<Bullet list of measurable goals>`
-- **Key Tasks:** Reference `Active_Task.md` IDs or embed a short list if the stage is just starting.
-- **Dependencies:** Calls to other teams, vendors, or decisions required.
-- **Acceptance Criteria:** Moment when the stage can be considered complete.
-- **Risks & Mitigations:** Stage-specific issues.
-- **Hand-off Instructions:** What gets moved into `.acontext/tasks` logs, and how success is recorded.
+- Window: <Dates or sprints>
+- Goals: <Measurable outcomes>
+- Key Tasks: Active_Task IDs (link) + brief notes.
+- Dependencies: Teams/vendors/decisions required.
+- Acceptance Criteria: How we know the stage is done.
+- Risks & Mitigations: Stage-specific issues.
+- Hand-off: What to record in `.acontext/tasks` + Implementation summary.
 ```
 
-For stages still in planning, fill everything except `Key Tasks` until groomed tasks exist.
+Keep completed stages at the bottom as history.
 
 ---
 
-## 5. Research & Validation Work (Pre-Implementation)
-
-- **Discovery Tasks:** Interviews, log analysis, benchmark reviews.
-- **Tech Spikes:** Proof-of-concept work with success criteria and owners.
-- **Decision Logs:** Link to `.acontext/decisions` entries when conclusions are made.
-
-This section prevents research work from being forgotten or going undocumented in `Active_Task.md`.
+## 5) Research & Validation (pre-implementation)
+- Discovery tasks (interviews, log analysis, benchmarks).
+- Tech spikes with success criteria/owners.
+- Decision links: `.acontext/decisions/*` when finalized.
 
 ---
 
-## 6. Quality & Verification Strategy
-
-- **Testing Pyramid:** Unit, integration, end-to-end breakdown with owners/tools.
-- **Manual QA:** Scenarios, devices, and data sets required before release.
-- **Monitoring & Alerts:** Metrics that indicate regressions (tie to Stage 3/4 acceptance criteria).
-- **Definition of Done (DoD):** Checklist engineers must satisfy before marking a task as complete.
-
-```
-Definition of Done
-- Tests written & passing (unit + e2e where relevant)
-- Accessibility requirements verified
-- Feature toggles / config documented
-- Telemetry + dashboards updated
-- Task log in `.acontext` completed and linked in Active_Task.md
-```
+## 6) Quality & Verification
+- Testing pyramid for this cycle (unit/integration/e2e).
+- Manual QA scenarios/devices/data.
+- Monitoring/alerts tied to Stage 3/4 criteria.
+- Definition of Done (DoD):
+  - Tests written & passing.
+  - Accessibility verified (if UI).
+  - Feature flags/config documented.
+  - Telemetry/dashboards updated.
+  - Task log in `.acontext` completed + linked in `Active_Task.md`.
 
 ---
 
-## 7. Risk Register
+## 7) Risks
 
 | ID | Description | Stage Impacted | Owner | Mitigation / Trigger |
 |----|-------------|----------------|-------|----------------------|
-| R-01 | Example: “Notification vendor quota may be insufficient.” | Stage 2 | Tech Lead | Negotiate quota before Stage 2 kickoff; fallback to alternate vendor. |
+| R-01 | `<Risk>` | `<Stage>` | `<Owner>` | `<Plan>` |
 
-Keep this table trimmed but current. Move finalized learnings into `.acontext/decisions` when resolved.
+Keep lean; move resolved items to `.acontext/decisions` if reusable.
 
 ---
 
-## 8. Working Agreements
-
-Document the social contracts and operating rituals for the engineering/agent team:
-- Stand-up cadence and medium.
+## 8) Working Agreements
+- Stand-up cadence/channel.
 - Branching + code review rules.
-- Documentation expectations (e.g., “Every PR links to Active_Task ID + task log”).
+- Doc expectations (every PR links Active_Task ID + task log).
 - Escalation path for blockers.
 
-> These agreements prevent knowledge drift when new agents join mid-stage.
+---
+
+## 9) Change Management
+- Scope changes: approval path + PRD/Product_Backlog updates.
+- Emergency work: where to log hotfixes so they don�t bypass BMAD docs.
+- Versioning: when to snapshot this file (e.g., end of each stage) and how to reference prior versions.
 
 ---
 
-## 9. Change Management
-- **Scope Changes:** How additions/removals get approved (e.g., “Requires Product + Tech lead sign-off and PRD update”).
-- **Emergency Work:** Where to log hotfixes so they don’t bypass BMAD documentation.
-- **Versioning:** When to snapshot this file (e.g., end of each stage) and how to reference previous versions.
-
----
-
-## 10. Stage Summary Archive
-Once a stage completes, capture the highlights here:
-
+## 10) Stage Summary Archive
 ```
 ### Stage N Summary
 - Dates:
 - What shipped:
-- Evidence (links to demos, metrics, or `.acontext/tasks`):
+- Evidence: links to demos/metrics/`.acontext/tasks`.
 - Lessons Learned:
-- Follow-up items (rolled into Product_Backlog or Active_Task):
+- Follow-ups: moved to Product_Backlog or Active_Task.
 ```
-
-This acts as a lightweight postmortem log inside Implementation.md without overwhelming current readers.
 
 ---
 
 ### Usage Checklist
-- [ ] Every stage listed here corresponds to entries in `Active_Task.md`.
-- [ ] No feature appears here unless it traces back to `PRD.md`.
-- [ ] Research tasks have success criteria and owners.
-- [ ] Definition of Done + Quality strategy aligns with `project_structure.md` guidelines.
-- [ ] Risks have owners and mitigation hooks—never leave blank cells.
+- [ ] Every stage here maps to `Active_Task.md` entries.
+- [ ] No feature listed unless it traces back to `PRD.md`.
+- [ ] Research tasks have owners + success criteria.
+- [ ] DoD/quality align with `project_structure.md` guidance.
+- [ ] Risks have owners + mitigation hooks.
 
-Keep this Implementation Plan living and concise. Update it whenever scope or sequencing changes so future agents can spin up instantly with the latest direction.
+Keep this concise and current so agents can align instantly.
