@@ -4,14 +4,14 @@ A lightweight documentation template that makes any project AI-agent-friendly. O
 
 ## Quick Start
 
-1. Copy this `docs/` folder into your project root
+1. Copy this `.vital_context/` folder into your project root
 2. Fill in `CONTEXT.md` with your project details (name, stack, current stage, active tasks)
 3. Fill in `PRD.md` with your product requirements
 4. Customize `rules/` files for your stack's conventions
 
 Then start any AI session with:
 ```
-Read docs/CONTEXT.md. Task: [describe the work].
+Read .vital_context/CONTEXT.md. Task: [describe the work].
 ```
 
 That's it. The agent reads context, does the work, logs what it did.
@@ -19,18 +19,19 @@ That's it. The agent reads context, does the work, logs what it did.
 ## Structure
 
 ```
-docs/
-├── CONTEXT.md        # THE entry point. Agents read this first and only this per task.
-├── README.md         # You're reading it.
-├── PRD.md            # Product requirements & vision (read once, not per-task)
-├── backlog.md        # Future work & ideas
-├── bugs.md           # Known issues & resolutions
+.vital_context/
+├── CONTEXT.md          # THE entry point. Agents read this first and only this per task.
+├── README.md           # You're reading it.
+├── QuickPrompts.md     # Universal prompts for AI agents
+├── PRD.md              # Product requirements & vision (read once, not per-task)
+├── backlog.md          # Future work & ideas
+├── bugs.md             # Known issues & resolutions
 ├── rules/
-│   ├── structure.md  # File organization & naming conventions
-│   └── design.md     # UI/UX design system & components
+│   ├── structure.md    # File organization & naming conventions
+│   └── design.md       # UI/UX design system & components
 └── tasks/
-    ├── index.md      # Task registry + lightweight log template
-    └── task-*.md     # Individual task logs (~20 lines each)
+    ├── index.md        # Task registry + lightweight log template
+    └── task-*.md       # Individual task logs (~20 lines each)
 ```
 
 ## Philosophy
