@@ -23,7 +23,9 @@ That's it. The agent reads context, does the work, logs what it did.
 ├── CONTEXT.md          # THE entry point. Agents read this first and only this per task.
 ├── README.md           # You're reading it.
 ├── QuickPrompts.md     # Universal prompts for AI agents
-├── PRD.md              # Product requirements & vision (read once, not per-task)
+├── PRD.md              # Product requirements & detailed feature specs
+├── architecture.md     # Stack, schemas, data flows, API endpoints, decisions
+├── reference.md        # Commands, env vars, file structure, quick lookups
 ├── backlog.md          # Future work & ideas
 ├── bugs.md             # Known issues & resolutions
 ├── rules/

@@ -79,10 +79,16 @@ Keep under 6 metrics. Note if new telemetry is required.
 - **Outcome:** [Observable change]
 - **Features:**
   1. [Feature] — [user value]
+     - Success: [testable condition, e.g., "loads in <2s", "works offline"]
+     - Dependencies: [APIs, libraries, services needed]
   2. [Feature] — [user value]
-- **Success Criteria:** [How we know it works]
-- **Risks:** [Unknowns]
+     - Success: [testable condition]
+     - Dependencies: [what it needs]
+- **Overall Success Criteria:** [How we know the epic works as a whole]
+- **Risks:** [Unknowns or platform constraints]
 ```
+
+Include per-feature success criteria so agents can self-validate. List dependencies so agents know what to import/configure. For domain-specific specs (alert strategies, sync intervals, permission flows), add subsections under the relevant feature.
 
 Tag each epic: `MVP` / `Future` / `Research`.
 

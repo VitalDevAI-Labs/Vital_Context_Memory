@@ -27,6 +27,12 @@ Read .vital_context/CONTEXT.md. Read .vital_context/tasks/task-YYYYMMDD-NNN-[nam
 Continue from where it left off. Update the task log when done.
 ```
 
+**Architecture / schema questions:**
+```
+Read .vital_context/architecture.md.
+[Ask your question about stack, schemas, data flows, or API endpoints.]
+```
+
 **Agentic auto-dev (minimal intervention):**
 ```
 Read .vital_context/CONTEXT.md. Pick the next active task from the Active Tasks table.
