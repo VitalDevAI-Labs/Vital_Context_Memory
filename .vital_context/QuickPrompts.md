@@ -27,6 +27,12 @@ Read .vital_context/CONTEXT.md. Read .vital_context/tasks/task-YYYYMMDD-NNN-[nam
 Continue from where it left off. Update the task log when done.
 ```
 
+**Check requirements for a stage:**
+```
+Read .vital_context/PRD.md (section 7 - Requirements Registry).
+Show me all requirements for Stage [N] and their status.
+```
+
 **Phase status / what was delivered:**
 ```
 Read .vital_context/playbook.md.
@@ -47,33 +53,115 @@ When done, pick the next task. Continue until all active tasks are complete.
 ```
 
 
-## Task Simulation 
+## First Load: Bootstrap Prompt
 
-## Phase 0: New Project Setup
+> **When to use:** You've copied `.vital_context/` into your project root and need to populate every file from your existing project context (a claude.md, a PRD, a conversation, or your own notes).
 
 **You do once:**
 
-1. Copy `.vital_context/` into your new project root
-2. Fill in the templates
+1. Copy `.vital_context/` folder into your project root
+2. Run the bootstrap prompt below
+3. Review the output, correct anything wrong
+4. You're done — every future session starts with `Read .vital_context/CONTEXT.md`
 
-**Your prompt to agent:**
+**The bootstrap prompt:**
 
 ```
-Read .vital_context/CONTEXT.md.
-This is a new project. I'm building [Smart Task Manager] with 
-[React 18 + Node.js + Firebase + Vercel].
+Read all template files in .vital_context/ to understand the structure.
+Then scan the project codebase (package.json, config files, src/ structure, schema files, .env.example).
 
-Fill in these files with my project details:
-1. .vital_context/CONTEXT.md — name, stack, stages, first active tasks
-2. .vital_context/PRD.md — product overview, personas, epics with features
-3. .vital_context/architecture.md — stack table, data models, API endpoints, architecture diagram
-4. .vital_context/reference.md — file structure, dev commands, env vars
-5. .vital_context/rules/structure.md — folder layout, naming conventions
+I'm bootstrapping the .vital_context/ framework for this project.
+Here is my project context:
 
-Here's what I'm building: [paste your product description, features list, tech choices]
+[PASTE your claude.md / PRD / project description / feature list here]
+
+Fill in EVERY file below, in this exact order. Follow the template structure already in each file.
+Do NOT skip any file. Do NOT leave placeholder values — use real project data or mark "TBD" only if genuinely unknown.
+
+---
+
+FILE 1: .vital_context/CONTEXT.md
+- Project name, one-line description, full tech stack
+- Current stage and status (which phase is active RIGHT NOW)
+- Phases table: break the project into 4-6 stages with goal + status for each
+- Active Tasks table: the tasks for the CURRENT stage only
+- Key Decisions table: every tech/architecture decision already made with rationale
+- Key Rules: naming conventions, file placement rules for this stack
+- Reference Docs table: keep as-is, just verify links work
+
+FILE 2: .vital_context/PRD.md
+- Product overview (what, why, who)
+- Personas with goals and frictions
+- Problem statements
+- Epics & features with per-feature success criteria and dependencies
+- §7 Requirements Registry: create EVERY requirement with unique IDs
+  - Use pattern: V0-REQ-001, V1-REQ-001, V2-REQ-001 (prefix = stage number)
+  - One row per requirement, not per feature — break features into implementable requirements
+  - Set status: done for completed work, active for current stage, planned for future
+  - Include Priority (P0/P1/P2/P3) and Notes column
+
+FILE 3: .vital_context/playbook.md
+- One section per stage from CONTEXT.md phases table
+- Goals: 2-4 bullet points per stage
+- Requirements: list the REQ IDs from PRD.md §7 that belong to this stage
+- Key Tasks: task IDs if they exist, or "TBD — generate when stage becomes active"
+- Acceptance Criteria: technical/testable checks (builds, tests pass, API responds)
+- Definition of Done: user-facing outcomes (user can do X, feature works as expected)
+- Risks: known blockers or unknowns
+- Hand-off: what the next stage inherits (for completed stages, document what was delivered)
+
+FILE 4: .vital_context/architecture.md
+- Tech stack table with version numbers and purpose for each tool
+- Data models / schemas (database tables, TypeScript interfaces, API types)
+- Data flow diagram (text-based: user action → frontend → API → database → response)
+- API endpoints table (method, path, description, auth required)
+- Key Decisions log with alternatives considered and rationale
+- Architecture diagram (text-based system overview)
+
+FILE 5: .vital_context/reference.md
+- Project file structure tree (actual current structure from codebase)
+- Dev commands (install, dev, build, test, lint, deploy)
+- Environment variables table (name, purpose, example value, required?)
+- Key file locations (where to find config, routes, components, services, types)
+- External service URLs and API docs links
+
+FILE 6: .vital_context/rules/structure.md
+- Folder layout conventions (where new components go, where services go, etc.)
+- File naming conventions (camelCase, PascalCase, kebab-case — specify per file type)
+- Import ordering rules
+- Module boundaries (what can import what)
+
+FILE 7: .vital_context/rules/design.md
+- Color palette (hex values, semantic names)
+- Typography (font families, sizes, weights)
+- Spacing system (if using Tailwind, the scale)
+- Component patterns (which UI library, how to compose components)
+- Accessibility rules
+- Responsive breakpoints
+
+FILE 8: .vital_context/tasks/index.md
+- Add rows for any tasks already completed (from existing project history)
+- Set status: done for past work, active for current tasks
+- Keep the task log template as-is at the bottom
+
+FILE 9: .vital_context/bugs.md
+- Add any known bugs or limitations from the existing project
+- If none, leave the template empty but ready
+
+FILE 10: .vital_context/backlog.md
+- Add any future ideas, deferred features, or "nice to haves" not assigned to a stage
+- Reference PRD.md requirement IDs where applicable
+
+---
+
+After filling all files:
+1. Verify CONTEXT.md phases match playbook.md stages
+2. Verify PRD.md §7 requirement IDs match playbook.md requirement references
+3. Verify architecture.md schemas match any existing code/database
+4. Report: list each file + summary of what was filled + any "TBD" items that need my input
 ```
 
-**Agent responds:** Fills all 5 files with your project-specific content. Now every future session starts with full context.
+**What happens:** The agent reads your project context + scans the actual codebase, then fills all 10 files in one pass with real data. You review once, and the framework is live.
 
 ---
 
@@ -91,14 +179,14 @@ implement, and update docs when done.
 
 **What the agent does:**
 
-1. Reads `CONTEXT.md` — knows the project, current phase, active tasks
-2. Reads `architecture.md` — gets the data model schemas, API endpoint patterns
-3. Reads `rules/structure.md` — knows where to put files (`backend/routes/`, `backend/services/`)
-4. Creates `tasks/task-20260319-001-crud-api.md` with goal + plan
+1. Reads `CONTEXT.md` — knows the project, current phase, active tasks
+2. Reads `architecture.md` — gets the data model schemas, API endpoint patterns
+3. Reads `rules/structure.md` — knows where to put files (`backend/routes/`, `backend/services/`)
+4. Creates `tasks/task-20260319-001-crud-api.md` with goal + plan
 5. Implements the code
 6. Updates the task log with what was done, files changed, decisions
-7. Updates `CONTEXT.md` active tasks table (marks task done)
-8. Updates `tasks/index.md` with new entry
+7. Updates `CONTEXT.md` active tasks table (marks task done)
+8. Updates `tasks/index.md` with new entry
 
 ---
 
@@ -114,8 +202,8 @@ Research both, recommend one, and update architecture.md with the decision.
 
 **Agent responds:** Analyzes tradeoffs, picks one, then updates:
 
-- `architecture.md` → adds row to Key Decisions table + updates Architecture Diagram if needed
-- `CONTEXT.md` → adds to Key Decisions summary
+- `architecture.md` → adds row to Key Decisions table + updates Architecture Diagram if needed
+- `CONTEXT.md` → adds to Key Decisions summary
 - Optionally creates a task log if the research was significant
 
 ---
@@ -132,11 +220,11 @@ Fix it, log in tasks/, update bugs.md with resolution.
 
 **Agent does:**
 
-1. Reads `bugs.md` — checks if it's already known
-2. Reads `architecture.md` — understands the Calendar sync data flow
-3. Creates `tasks/task-20260319-002-fix-duplicate-sync.md`
+1. Reads `bugs.md` — checks if it's already known
+2. Reads `architecture.md` — understands the Calendar sync data flow
+3. Creates `tasks/task-20260319-002-fix-duplicate-sync.md`
 4. Investigates, finds root cause, implements fix
-5. Updates `bugs.md` — adds entry with root cause + resolution
+5. Updates `bugs.md` — adds entry with root cause + resolution
 6. Updates task log with outcome
 
 ---
@@ -154,9 +242,9 @@ and promote items from backlog.md if applicable.
 
 **Agent updates:**
 
-- `CONTEXT.md` → Phase 2 marked `done`, Phase 3 marked `active`, new Active Tasks table
-- `backlog.md` → promoted items removed or marked
-- `PRD.md` → if any feature scope changed during Phase 2, updates the epic
+- `CONTEXT.md` → Phase 2 marked `done`, Phase 3 marked `active`, new Active Tasks table
+- `backlog.md` → promoted items removed or marked
+- `PRD.md` → if any feature scope changed during Phase 2, updates the epic
 
 ---
 
@@ -190,16 +278,18 @@ That's it. The agent has everything. If it needs deeper info, CONTEXT.md's refer
 
 |Situation|Files to update|
 |---|---|
-|**Starting a task**|Create `tasks/task-*.md`, update `CONTEXT.md` active tasks|
-|**Finishing a task**|Update task log, `tasks/index.md`, `CONTEXT.md` active tasks|
-|**Tech decision made**|`architecture.md` decisions table, `CONTEXT.md` decisions|
-|**Schema changed**|`architecture.md` data models|
-|**New API endpoint**|`architecture.md` endpoints, `reference.md` quick lookup|
+|**Starting a task**|Create `tasks/task-*.md`, update `CONTEXT.md` active tasks|
+|**Finishing a task**|Update task log, `tasks/index.md`, `CONTEXT.md` active tasks|
+|**Tech decision made**|`architecture.md` decisions table, `CONTEXT.md` decisions|
+|**Schema changed**|`architecture.md` data models|
+|**New API endpoint**|`architecture.md` endpoints, `reference.md` quick lookup|
 |**Bug found/fixed**|`bugs.md`, create task log if significant|
-|**New feature scoped**|`PRD.md` epic, `backlog.md` or `CONTEXT.md` active tasks|
-|**Phase completed**|`CONTEXT.md` phases table + active tasks|
-|**File structure changed**|`rules/structure.md`, `reference.md` file structure|
-|**New env var added**|`reference.md` env vars table|
+|**New feature scoped**|`PRD.md` epic, `backlog.md` or `CONTEXT.md` active tasks|
+|**New requirement added**|`PRD.md` §7 requirements registry, assign ID + stage|
+|**Requirement completed**|`PRD.md` §7 status update, `playbook.md` if DoD criteria met|
+|**Phase completed**|`CONTEXT.md` phases table, `playbook.md` acceptance criteria + DoD|
+|**File structure changed**|`rules/structure.md`, `reference.md` file structure|
+|**New env var added**|`reference.md` env vars table|
 |**UI component pattern**|`rules/design.md`|
 
 ---

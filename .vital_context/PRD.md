@@ -94,7 +94,55 @@ Tag each epic: `MVP` / `Future` / `Research`.
 
 ---
 
-## 7. Experience Scenarios
+## 7. Requirements Registry
+
+<!-- 
+  Master list of all requirements with unique IDs.
+  - IDs follow the pattern: [STAGE_PREFIX]-REQ-NNN (e.g., V1-REQ-001, V2-REQ-001)
+  - Agents: reference these IDs in playbook.md stages and tasks/task-*.md files
+  - Status: 🔲 Not Started | 🔄 In Progress | ✅ Done | ⏸️ Deferred | ❌ Dropped
+  - When deferring/dropping, note the reason and move to backlog.md if applicable
+-->
+
+### Stage 0: Foundations
+
+| ID | Requirement | Priority | Status | Notes |
+|----|-------------|----------|--------|-------|
+| `V0-REQ-001` | `[requirement description]` | P0 | 🔲 | |
+| `V0-REQ-002` | `[requirement description]` | P0 | 🔲 | |
+
+### Stage 1: Core Experience
+
+| ID | Requirement | Priority | Status | Notes |
+|----|-------------|----------|--------|-------|
+| `V1-REQ-001` | `[requirement description]` | P0 | 🔲 | |
+| `V1-REQ-002` | `[requirement description]` | P0 | 🔲 | |
+| `V1-REQ-003` | `[requirement description]` | P1 | 🔲 | |
+
+### Stage 2: Expansion
+
+| ID | Requirement | Priority | Status | Notes |
+|----|-------------|----------|--------|-------|
+| `V2-REQ-001` | `[requirement description]` | P1 | 📅 | |
+| `V2-REQ-002` | `[requirement description]` | P1 | 📅 | |
+
+### Stage 3+: Future
+
+| ID | Requirement | Priority | Status | Notes |
+|----|-------------|----------|--------|-------|
+| `V3-REQ-001` | `[requirement description]` | P2 | 💡 | |
+
+### Requirements Inbox
+
+_New requirements discovered during development. Assign an ID and move to the appropriate stage during planning._
+
+| Requirement | Date Added | Source | Notes |
+|-------------|------------|--------|-------|
+| - | - | - | - |
+
+---
+
+## 8. Experience Scenarios
 
 | Scenario | Trigger | Steps | Happy Path | Edge Cases |
 |----------|---------|-------|------------|------------|
@@ -102,7 +150,7 @@ Tag each epic: `MVP` / `Future` / `Research`.
 
 ---
 
-## 8. Risks & Open Questions
+## 9. Risks & Open Questions
 
 | ID | Risk / Question | Severity | Owner | Mitigation |
 |----|-----------------|----------|-------|------------|

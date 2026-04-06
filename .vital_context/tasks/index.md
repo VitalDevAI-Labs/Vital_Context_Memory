@@ -19,6 +19,7 @@ When creating a new task file (`task-YYYYMMDD-NNN-brief-name.md`), use this stru
 - **Date:** YYYY-MM-DD
 - **Status:** planned | active | done | blocked
 - **Stage:** [which stage/epic this belongs to]
+- **Requirements:** [REQ IDs this task implements, e.g., V1-REQ-001, V1-REQ-003]
 
 ## Goal
 [1-2 sentences: what does success look like?]
