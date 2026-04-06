@@ -27,6 +27,12 @@ Read .vital_context/CONTEXT.md. Read .vital_context/tasks/task-YYYYMMDD-NNN-[nam
 Continue from where it left off. Update the task log when done.
 ```
 
+**Phase status / what was delivered:**
+```
+Read .vital_context/playbook.md.
+Show me the current status of all stages — what's done, what's active, what's next.
+```
+
 **Architecture / schema questions:**
 ```
 Read .vital_context/architecture.md.

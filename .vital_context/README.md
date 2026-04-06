@@ -22,6 +22,7 @@ That's it. The agent reads context, does the work, logs what it did.
 .vital_context/
 ├── CONTEXT.md          # THE entry point. Agents read this first and only this per task.
 ├── README.md           # You're reading it.
+├── playbook.md         # Stage-level progress, acceptance criteria, hand-offs
 ├── QuickPrompts.md     # Universal prompts for AI agents
 ├── PRD.md              # Product requirements & detailed feature specs
 ├── architecture.md     # Stack, schemas, data flows, API endpoints, decisions

@@ -54,6 +54,7 @@ Read these **only when needed**, not every task:
 
 | Doc | When to read |
 |-----|-------------|
+| [playbook.md](playbook.md) | Phase-level progress, acceptance criteria, hand-offs |
 | [PRD.md](PRD.md) | Understanding product vision, features, or requirements |
 | [rules/structure.md](rules/structure.md) | Creating new files, directories, or modules |
 | [rules/design.md](rules/design.md) | Any UI/UX work — colors, components, layout |
